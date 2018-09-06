@@ -23,4 +23,4 @@ class Content extends React.Component {
     }
 }
 
-export default WithPerfComponent(Content);
+export default Content;
