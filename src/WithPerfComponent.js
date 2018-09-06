@@ -20,18 +20,18 @@ const WithPerfComponent = WrappedComponent => {
         }
 
         componentDidMount() {
-            console.log("Perf : mounted!");
+            console.log("HOC : mounted!");
             console.timeStamp("HOCMounted")
 
-            window.addEventListener('snapshotTaken1', () => {
+            window.addEventListener('HOCMounted', () => {
                 this.setState({ showComponent: false }, () => {
-                    console.log("Perf >>>>> unmounted!");
+                    console.log("HOC : unmounted!");
                     console.timeStamp("HOCUnmounted");
-                    window.addEventListener('snapshotTaken2', () => {
+                    window.addEventListener('HOCUnmounted', () => {
                         this.setState({ showComponent: true }, () => {
-                            console.log("Perf >>>>> mounted again!");
+                            console.log("HOC : mounted again!");
                             console.timeStamp("HOCMountedAgain");
-                            window.addEventListener('snapshotTaken3', () => {
+                            window.addEventListener('HOCMountedAgain', () => {
                                 console.log("took all snapshots!")
                             })
                         })

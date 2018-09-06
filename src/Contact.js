@@ -4,11 +4,7 @@ import WithPerfComponent from "./WithPerfComponent"
 class Contact extends React.Component {
     render(){
         return(
-            <div>
-            <p>
-                "I am at Contact!"
-            </p>
-            </div>
+            <p> "I am at Contact!"  </p>
         );
     }
 
