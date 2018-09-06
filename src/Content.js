@@ -15,11 +15,11 @@ class Content extends React.Component {
     }
 
     componentDidMount(){
-        console.log("Component Content mounted!");
+        console.log("Content : mounted!");
     }
 
     componentWillUnmount(){
-        console.log("Component Content about to unmounted!");
+        console.log("Content : about to unmount!");
     }
 }
 
