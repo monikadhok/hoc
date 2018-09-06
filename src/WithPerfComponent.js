@@ -9,6 +9,7 @@ const WithPerfComponent = WrappedComponent => {
             this.state = {
                 showComponent: true
             }
+            this.addEventListeners = this.addEventListeners.bind(this);
         }
 
         render() {
@@ -19,17 +20,14 @@ const WithPerfComponent = WrappedComponent => {
             );
         }
 
-        componentDidMount() {
-            console.log("HOC : mounted!");
-            console.timeStamp("HOCMounted")
-
+        addEventListeners() {
             window.addEventListener('HOCMounted', () => {
                 this.setState({ showComponent: false }, () => {
-                    console.log("HOC : unmounted!");
+                    console.log("HOCUnmounted!");
                     console.timeStamp("HOCUnmounted");
                     window.addEventListener('HOCUnmounted', () => {
                         this.setState({ showComponent: true }, () => {
-                            console.log("HOC : mounted again!");
+                            console.log("HOCMountedAgain");
                             console.timeStamp("HOCMountedAgain");
                             window.addEventListener('HOCMountedAgain', () => {
                                 console.log("took all snapshots!")
@@ -37,7 +35,13 @@ const WithPerfComponent = WrappedComponent => {
                         })
                     })
                 })
-            });
+            });  
+        }
+
+        componentDidMount() {
+            console.log("HOC : mounted!");
+            console.timeStamp("HOCMounted");
+            this.addEventListeners();
         }
     }
 }
