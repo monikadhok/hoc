@@ -10,6 +10,8 @@ const WithPerfComponent = WrappedComponent => {
                 showComponent: true
             }
             this.addEventListeners = this.addEventListeners.bind(this);
+            this.mountedAgain = this.mountedAgain.bind(this);
+            this.unmounted = this.unmounted.bind(this);
         }
 
         render() {
@@ -21,27 +23,32 @@ const WithPerfComponent = WrappedComponent => {
         }
 
         addEventListeners() {
-            window.addEventListener('HOCMounted', () => {
-                this.setState({ showComponent: false }, () => {
-                    console.log("HOCUnmounted!");
-                    console.timeStamp("HOCUnmounted");
-                    window.addEventListener('HOCUnmounted', () => {
-                        this.setState({ showComponent: true }, () => {
-                            console.log("HOCMountedAgain");
-                            console.timeStamp("HOCMountedAgain");
-                            window.addEventListener('HOCMountedAgain', () => {
-                                console.log("took all snapshots!")
-                            })
-                        })
-                    })
-                })
-            });  
+            //window.addEventListener('HOCMounted', () => {
+              //  this.setState({ showComponent: false }, this.unmounted);
+                this.setState({ showComponent: false }, () => {});
+           // })
+        }
+
+        unmounted() {
+            console.log("HOCUnmounted!");
+            console.timeStamp("HOCUnmounted");
+            window.addEventListener('HOCUnmounted', () => {
+                this.setState({ showComponent: true }, this.mountedAgain);
+            });
+        }
+
+        mountedAgain() {
+            console.log("HOCMountedAgain");
+            console.timeStamp("HOCMountedAgain");
+            window.addEventListener('HOCMountedAgain', () => {
+                console.log("took all snapshots!")
+            })
         }
 
         componentDidMount() {
             console.log("HOC : mounted!");
             console.timeStamp("HOCMounted");
-            this.addEventListeners();
+            setTimeout(() => this.addEventListeners(), 10000);
         }
     }
 }
