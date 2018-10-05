@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import ReactDOM from "react-dom"
 
 const WithPerfComponent = WrappedComponent => {
-    return class NewComponent extends Component {
+    return class PerfComponent extends Component {
 
         constructor(props) {
             super(props);
@@ -10,8 +10,8 @@ const WithPerfComponent = WrappedComponent => {
                 counter: true,
                 showComponent: true
             }
-            this.addEventListeners = this.addEventListeners.bind(this);
             this.unmounted = this.unmounted.bind(this);
+            this.addEventListeners = this.addEventListeners.bind(this);
             this.cleanStateAddListeners = this.cleanStateAddListeners.bind(this);
         }
 
@@ -26,42 +26,46 @@ const WithPerfComponent = WrappedComponent => {
 
         cleanStateAddListeners() {
             //Clean the previous components with multiple unmounts.
-            setTimeout(() => {
-                this.setState({ counter: 1 }, () => { });
-            }, 2000);
-            setTimeout(() => {
-                this.setState({ counter: 2 }, () => { });
-                console.log("Counter incremented again");
-                this.addEventListeners();
-                console.timeStamp("HOCMounted");
-            }, 5000);
+            this.setState({ counter: 1 }, () => {
+                console.log("Tool : Counter incremented");
+                this.setState({ counter: 2 }, () => {
+                    console.log("Tool : Counter incremented again");
+                    console.timeStamp("HOCMounted");
+                    this.addEventListeners();
+                });
+            });
         }
 
         addEventListeners() {
             window.addEventListener('HOCMounted', () => {
-                console.log("Captured event: HOCMounted!");
-                this.setState({ showComponent: false }, () => this.unmounted);
+                console.log("Tool : Captured event: HOCMounted!");
+                this.setState({ showComponent: false });
+                setTimeout(() => {
+                    this.unmounted();
+                    console.log("Tool : Happened as per your demand?");
+                }, 20000);
+
             })
         }
 
         unmounted() {
-            console.log("after unmounted");
-            setTimeout(() => {
-                this.setState({ counter: 1 }, () => { });
-                console.log("Counter incremented");
-            }, 2000);
-            setTimeout(() => {
-                this.setState({ counter: 2 }, () => { });
-                console.log("Counter re-incremented");
-                console.log("HOCUnmounted!");
-                console.timeStamp("HOCUnmounted");
-            }, 6000);
+            console.log("Tool :  after unmounted");
+
+            this.setState({ counter: 1 }, () => {
+                console.log("Tool :  Counter incremented");
+                this.setState({ counter: 2 }, () => {
+                    console.log("Tool : Counter re-incremented");
+                    console.log("Tool : HOCUnmounted!");
+                    console.timeStamp("HOCUnmounted");
+                });
+            });
         }
 
         componentDidMount() {
-            console.log("HOC : mounted!");
+            console.log("Tool : HOC : mounted!");
             this.cleanStateAddListeners();
         }
+
     }
 }
 
