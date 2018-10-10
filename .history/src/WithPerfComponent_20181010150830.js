@@ -48,7 +48,8 @@ const WithPerfComponent = WrappedComponent => {
               });
             });
           };
-
+        };
+        
         acknowledgeMount = () => {
             // Clean the previous components with multiple unmounts.
             const timeout = 30000;

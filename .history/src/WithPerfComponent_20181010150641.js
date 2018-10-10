@@ -26,28 +26,29 @@ const WithPerfComponent = WrappedComponent => {
         }
 
         unloadTheComponent = () => {
-            (window).addEventListener("HOCMounted", () => {
+            (window as any).addEventListener("HOCMounted", () => {
               console.log("Tool : Captured event: HOCMounted!!!!!");
               this.setState({ showComponent: false }, () => {
                 this.acknowledgeUnmount();
               });
             });
           };
-
-          acknowledgeUnmount = () => {
+          
+        acknowledgeMount = () => {
+            // Clean the previous components with multiple unmounts.
             const timeout = 30000;
-            console.log("Tool : after unmounted");
             this.setState({ counter: 1 }, () => {
               console.log("Tool : Counter incremented");
               this.setState({ counter: 2 }, () => {
                 setTimeout(() => {
-                  console.log("Tool : Counter re-incremented");
-                  console.log("Tool : HOCUnmounted!");
-                  console.timeStamp("HOCUnmounted");
+                  console.log("Tool : Counter incremented again");
+                  console.timeStamp("HOCMounted");
+                  this.unloadTheComponent();
                 }, timeout);
               });
             });
           };
+      
 
         acknowledgeMount = () => {
             // Clean the previous components with multiple unmounts.

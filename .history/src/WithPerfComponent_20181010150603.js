@@ -10,9 +10,9 @@ const WithPerfComponent = WrappedComponent => {
                 counter: true,
                 showComponent: true
             }
-            // this.acknowledgeMount = this.acknowledgeMount.bind(this);
-            // this.unloadTheComponent = this.unloadTheComponent.bind(this);
-            // this.cleanStateAddListeners = this.cleanStateAddListeners.bind(this);
+            this.acknowledgeMount = this.acknowledgeMount.bind(this);
+            this.unloadTheComponent = this.unloadTheComponent.bind(this);
+            this.cleanStateAddListeners = this.cleanStateAddListeners.bind(this);
         }
 
         render() {
@@ -25,29 +25,7 @@ const WithPerfComponent = WrappedComponent => {
             );
         }
 
-        unloadTheComponent = () => {
-            (window).addEventListener("HOCMounted", () => {
-              console.log("Tool : Captured event: HOCMounted!!!!!");
-              this.setState({ showComponent: false }, () => {
-                this.acknowledgeUnmount();
-              });
-            });
-          };
-
-          acknowledgeUnmount = () => {
-            const timeout = 30000;
-            console.log("Tool : after unmounted");
-            this.setState({ counter: 1 }, () => {
-              console.log("Tool : Counter incremented");
-              this.setState({ counter: 2 }, () => {
-                setTimeout(() => {
-                  console.log("Tool : Counter re-incremented");
-                  console.log("Tool : HOCUnmounted!");
-                  console.timeStamp("HOCUnmounted");
-                }, timeout);
-              });
-            });
-          };
+       
 
         acknowledgeMount = () => {
             // Clean the previous components with multiple unmounts.
