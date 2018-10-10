@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import ReactDOM from "react-dom"
 
 const WithPerfComponent = WrappedComponent => {
-    class PerfComponent extends Component {
+    return class PerfComponent extends Component {
 
         constructor(props) {
             super(props);
@@ -16,11 +16,10 @@ const WithPerfComponent = WrappedComponent => {
         }
 
         render() {
-            const { forwardedRef, ...rest } = this.props;
             return (
                 <div>
                     <p> {this.state.counter} </p>
-                    {this.state.showComponent && <WrappedComponent {...rest} ref={forwardedRef}/>}
+                    {this.state.showComponent && <WrappedComponent />}
                 </div>
             );
         }
@@ -41,10 +40,10 @@ const WithPerfComponent = WrappedComponent => {
             window.addEventListener('HOCMounted', () => {
                 console.log("Tool : Captured event: HOCMounted!");
                 this.setState({ showComponent: false });
-                // setTimeout(() => {
-                //     this.unmounted();
-                //     console.log("Tool : Happened as per your demand?");
-                // }, 20000);
+                setTimeout(() => {
+                    this.unmounted();
+                    console.log("Tool : Happened as per your demand?");
+                }, 20000);
 
             })
         }
@@ -62,39 +61,24 @@ const WithPerfComponent = WrappedComponent => {
             });
         }
 
-        addEventListenersMount() {
-            window.addEventListener('HOCUnmounted', () => {
-                console.log("Tool : Captured event: HOCUnmounted!");
-                this.setState({ showComponent: true });
-                // setTimeout(() => {
-                //     this.unmounted();
-                //     console.log("Tool : Happened as per your demand?");
-                // }, 20000);
+        addEventListeners() {
+            window.addEventListener('HOCMounted', () => {
+                console.log("Tool : Captured event: HOCMounted!");
+                this.setState({ showComponent: false });
+                setTimeout(() => {
+                    this.unmounted();
+                    console.log("Tool : Happened as per your demand?");
+                }, 20000);
 
             })
         }
-
+        
         componentDidMount() {
             console.log("Tool : HOC : mounted!");
-            this.setState({ counter: 2 }, () => { console.log("Tool inside1") });
-
-            (window).addEventListener("HOCUnmounted", () => {
-                console.log("Tool : Captured event: HOCUnmounted!!");
-                this.setState({ showComponent: true }, () => { console.log("inside1") });
-                console.log("Tool : success!");
-            });
-
-            (window).addEventListener("HOCMounted", () => {
-                console.log("Tool : Captured event: HOCMounted!!");
-                this.setState({ showComponent: false }, () => { console.log("inside2") });
-                console.log("Tool : success!");
-            });
+            this.cleanStateAddListeners();
         }
-    }
 
-    return React.forwardRef((props, ref) => {
-       return <PerfComponent {...props} forwardedRef={ref} />;
-    });
+    }
 }
 
 export default WithPerfComponent;

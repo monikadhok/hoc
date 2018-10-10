@@ -1,6 +1,5 @@
 import React from "react"
 import WithPerfComponent from "./WithPerfComponent"
-import ContactKid from "./ContactKid";
 
 class Contact extends React.Component {
 
@@ -14,7 +13,7 @@ class Contact extends React.Component {
 
     render(){
         return(
-          <ContactKid name="abc" age="25"/>
+            <p> "I am at Contact!"  </p>
         );
     }
 
@@ -34,4 +33,4 @@ class Contact extends React.Component {
     }
 }
 
-export default Contact;
+export default WithPerfComponent(Contact);

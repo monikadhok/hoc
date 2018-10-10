@@ -41,10 +41,10 @@ const WithPerfComponent = WrappedComponent => {
             window.addEventListener('HOCMounted', () => {
                 console.log("Tool : Captured event: HOCMounted!");
                 this.setState({ showComponent: false });
-                // setTimeout(() => {
-                //     this.unmounted();
-                //     console.log("Tool : Happened as per your demand?");
-                // }, 20000);
+                setTimeout(() => {
+                    this.unmounted();
+                    console.log("Tool : Happened as per your demand?");
+                }, 20000);
 
             })
         }
@@ -66,34 +66,25 @@ const WithPerfComponent = WrappedComponent => {
             window.addEventListener('HOCUnmounted', () => {
                 console.log("Tool : Captured event: HOCUnmounted!");
                 this.setState({ showComponent: true });
-                // setTimeout(() => {
-                //     this.unmounted();
-                //     console.log("Tool : Happened as per your demand?");
-                // }, 20000);
+                setTimeout(() => {
+                    this.unmounted();
+                    console.log("Tool : Happened as per your demand?");
+                }, 20000);
 
             })
         }
 
         componentDidMount() {
             console.log("Tool : HOC : mounted!");
-            this.setState({ counter: 2 }, () => { console.log("Tool inside1") });
-
-            (window).addEventListener("HOCUnmounted", () => {
-                console.log("Tool : Captured event: HOCUnmounted!!");
-                this.setState({ showComponent: true }, () => { console.log("inside1") });
-                console.log("Tool : success!");
-            });
-
-            (window).addEventListener("HOCMounted", () => {
-                console.log("Tool : Captured event: HOCMounted!!");
-                this.setState({ showComponent: false }, () => { console.log("inside2") });
-                console.log("Tool : success!");
-            });
+            this.addEventListenersMount();
+            this.cleanStateAddListeners();
+            
         }
     }
 
     return React.forwardRef((props, ref) => {
-       return <PerfComponent {...props} forwardedRef={ref} />;
+        console.log("Tool ", ref);
+        return <PerfComponent {...props as any} forwardedRef={ref} />;
     });
 }
 

@@ -1,6 +1,5 @@
 import React from "react"
 import WithPerfComponent from "./WithPerfComponent"
-import ContactKid from "./ContactKid";
 
 class Contact extends React.Component {
 
@@ -14,19 +13,12 @@ class Contact extends React.Component {
 
     render(){
         return(
-          <ContactKid name="abc" age="25"/>
+            <p> "I am at Contact!"  </p>
         );
     }
 
     componentDidMount(){
-        // let arr = new Uint8Array(1024 * 1024 * 30);
-        // this.setState({
-        //     test3: arr
-        // });
-        console.log("Contact : mounted!");
-        // this.setState({
-        //     test3 : null
-        // })
+        console.log("ContactKid : mounted!");
     }
 
     componentWillUnmount(){
@@ -34,4 +26,4 @@ class Contact extends React.Component {
     }
 }
 
-export default Contact;
+export default WithPerfComponent(Contact);

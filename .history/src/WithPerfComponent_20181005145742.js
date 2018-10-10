@@ -76,7 +76,7 @@ const WithPerfComponent = WrappedComponent => {
 
         componentDidMount() {
             console.log("Tool : HOC : mounted!");
-            this.setState({ counter: 2 }, () => { console.log("Tool inside1") });
+            //this.setState({ counter: 2 }, () => { console.log("inside1") });
 
             (window).addEventListener("HOCUnmounted", () => {
                 console.log("Tool : Captured event: HOCUnmounted!!");

@@ -34,4 +34,4 @@ class Contact extends React.Component {
     }
 }
 
-export default Contact;
+export default WithPerfComponent(Contact);
